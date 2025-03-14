@@ -10,6 +10,7 @@ import requests
 from datetime import datetime
 from io import BytesIO
 import time
+import unicodedata
 
 def extract_info(part, img_df):
     if part == 'left':
@@ -51,7 +52,7 @@ driver.get('https://www.instagram.com/holybar/p/DF2QTMlIsGL/?img_index=1')
 
 time.sleep(5)
 
-pattern = re.compile(r'sessions?', re.IGNORECASE)
+pattern = re.compile(r'(sessions?|lineup)', re.IGNORECASE)
 
 links = driver.find_elements(By.TAG_NAME, 'a')
 links_url = [link.get_attribute('href') for link in links]
@@ -64,8 +65,27 @@ driver.get(last_post)
 time.sleep(5)
 
 images = driver.find_elements(By.TAG_NAME, "img")
+
+for img in images:
+    img_text = img.get_attribute('alt')
+    img_text_clean = unicodedata.normalize("NFKC", img_text)
+    img_text_clean = re.sub(r'[^\x00-\x7F]+', '', img_text_clean)
+    img_text_clean = re.sub(r'^\s+', '', img_text_clean, flags=re.MULTILINE)
+    # print(img_text_clean)
+    lineup = pattern.search(img_text_clean)
+    if lineup:
+        break
+
+day_pattern = r'^(?:Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday).*'
+matches = re.findall(day_pattern, img_text_clean, flags=re.MULTILINE)
+
+for line in matches:
+    print(line)
+
 matching_images = [img for img in images if pattern.search(img.get_attribute('alt') or '')]
 
+if not matching_images:
+    raise IndexError('no images found')
 img_url = matching_images[0].get_attribute("src")
 
 response_img = requests.get(img_url)
