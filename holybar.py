@@ -71,7 +71,6 @@ for img in images:
     img_text_clean = unicodedata.normalize("NFKC", img_text)
     img_text_clean = re.sub(r'[^\x00-\x7F]+', '', img_text_clean)
     img_text_clean = re.sub(r'^\s+', '', img_text_clean, flags=re.MULTILINE)
-    # print(img_text_clean)
     lineup = pattern.search(img_text_clean)
     if lineup:
         break
@@ -79,43 +78,54 @@ for img in images:
 day_pattern = r'^(?:Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday).*'
 matches = re.findall(day_pattern, img_text_clean, flags=re.MULTILINE)
 
-for line in matches:
-    print(line)
+events = []
 
-matching_images = [img for img in images if pattern.search(img.get_attribute('alt') or '')]
+if matches:
+    for line in matches:
+        date, title = line.split(' - ', 1)
+        title = title.strip()
+        date = date + ' 20:45'
+        date = datetime.strptime(date, '%A, %B %d %H:%M')
+        date = date.replace(year=datetime.now().year)
+        events.append({'title':title, 'date':date})
+    events = pd.DataFrame(events)
 
-if not matching_images:
-    raise IndexError('no images found')
-img_url = matching_images[0].get_attribute("src")
+else:
+    matching_images = [img for img in images if pattern.search(img.get_attribute('alt') or '')]
 
-response_img = requests.get(img_url)
-img = Image.open(BytesIO(response_img.content))
-
-img = ImageOps.grayscale(img)
-img = ImageOps.autocontrast(img)
-img = img.point(lambda x: 0 if x < 128 else 255, '1')
-
-custom_config = r'--oem 3 --psm 6'
-
-img_df = pytesseract.image_to_data(img, config=custom_config, lang='eng', output_type=pytesseract.Output.DATAFRAME)
-img_df = img_df.query('conf > 80')
-
-date_pattern = re.compile(r'(\d{1,2}[./\\]\d{1,2})')
-img_df['dates'] = img_df["text"].str.findall(date_pattern)
-img_df = img_df.explode('dates')
-img_df_dates = img_df.dropna(subset='dates')
-img_df_dates = img_df_dates.sort_values('left')
-segment_threshold = (img_df_dates['left'].min() + img_df_dates['left'].max()) / 2
+    if not matching_images:
+        raise IndexError('no lineup found')
+        
+    img_url = matching_images[0].get_attribute("src")
     
-df_left = extract_info('left', img_df)
-df_right = extract_info('right', img_df)
-
-df = df_left + df_right
-df = pd.DataFrame(df)
-
-df['title'] = df['title'].str.join(" ")
-df['date'] = df['date'].apply(convert_dates)
-df['hour'] = '20:45'
-df['date'] = df['date'].astype(str) + " " + df['hour']
-df['date'] = df['date'].apply(lambda x: datetime.strptime(x, '%Y-%m-%d %H:%M'))
-df = df.drop('hour', axis=1)
+    response_img = requests.get(img_url)
+    img = Image.open(BytesIO(response_img.content))
+    
+    img = ImageOps.grayscale(img)
+    img = ImageOps.autocontrast(img)
+    img = img.point(lambda x: 0 if x < 128 else 255, '1')
+    
+    custom_config = r'--oem 3 --psm 6'
+    
+    img_df = pytesseract.image_to_data(img, config=custom_config, lang='eng', output_type=pytesseract.Output.DATAFRAME)
+    img_df = img_df.query('conf > 80')
+    
+    date_pattern = re.compile(r'(\d{1,2}[./\\]\d{1,2})')
+    img_df['dates'] = img_df["text"].str.findall(date_pattern)
+    img_df = img_df.explode('dates')
+    img_df_dates = img_df.dropna(subset='dates')
+    img_df_dates = img_df_dates.sort_values('left')
+    segment_threshold = (img_df_dates['left'].min() + img_df_dates['left'].max()) / 2
+        
+    df_left = extract_info('left', img_df)
+    df_right = extract_info('right', img_df)
+    
+    df = df_left + df_right
+    df = pd.DataFrame(df)
+    
+    df['title'] = df['title'].str.join(" ")
+    df['date'] = df['date'].apply(convert_dates)
+    df['hour'] = '20:45'
+    df['date'] = df['date'].astype(str) + " " + df['hour']
+    df['date'] = df['date'].apply(lambda x: datetime.strptime(x, '%Y-%m-%d %H:%M'))
+    df = df.drop('hour', axis=1)
