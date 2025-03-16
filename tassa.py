@@ -25,6 +25,6 @@ for event in soup.find_all('div', class_='card custom-product-card-template--178
     date = date + ' ' + hour
     date = datetime.strptime(date, '%d.%m.%Y %H:%M')
     img = title_container.find('img').get('src')
-    events.append({'title':title, 'date':date, 'link':link, 'img':img})
+    events.append({'show_name':title, 'date':date, 'link':link, 'img':img, 'venue':'TASSA'})
     
 events = pd.DataFrame(events)

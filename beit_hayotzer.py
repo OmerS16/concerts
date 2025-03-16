@@ -21,6 +21,6 @@ for event in soup.find_all('article'):
     date = datetime.strptime(date, '%d/%m/%Y %H:%M')
     link = title_container.find('a').get('href')
     img = event.find('div', class_='elementor-element elementor-element-f90359f elementor-widget elementor-widget-theme-post-featured-image elementor-widget-image').find('img').get('src')
-    events.append({'title':title, 'date':date, 'link':link, 'img':img})
+    events.append({'show_name':title, 'date':date, 'link':link, 'img':img, 'venue':'בית היוצר'})
     
 events = pd.DataFrame(events)

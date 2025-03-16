@@ -37,3 +37,6 @@ events['startDate'] = events['startDate'].apply(lambda x: x[:-10])
 events['startDate'] = events['startDate'].apply(lambda x: datetime.fromisoformat(x))
 events = events.drop('offers.availability', axis=1)
 events['name'] = events['name'].str.replace('<BR>', '')
+events['venue'] = 'זאפה'
+
+events = events.rename(columns={'name':'show_name', 'startDate':'date', 'image':'img', 'url':'link'})

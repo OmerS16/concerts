@@ -23,12 +23,11 @@ for event in soup_filtered.find_all('div', class_='fat-event-title'):
     inner_res = requests.get(link)
     inner_soup = BeautifulSoup(inner_res.text, 'html.parser')
     title = inner_soup.find('div', 'fat-event-title').get_text(strip=True)
-    description = inner_soup.find('div', 'fat-event-except').get_text(strip=True)
     image = inner_soup.find('div', 'fat-event-thumb').get('style', '')[22:-1]
     parent = event.parent.parent.parent.parent
     date = parent.get('data-single-time')
     hour, date = date.split(' - ')
-    events.append({'title':title, 'description':description, 'date':date, 'hour':hour, 'link':link, 'image':image})
+    events.append({'show_name':title, 'date':date, 'hour':hour, 'link':link, 'img':image, 'venue':'לבונטין 7'})
     
 events = pd.DataFrame(events)
 events['date'] = events['date'].apply(convert_dates)

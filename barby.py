@@ -33,4 +33,7 @@ events = events.drop('showTime', axis=1)
 events[['showSold', 'showSoldMaxBuy']] = events[['showSold', 'showSoldMaxBuy']].astype(int)
 events = events.query('showSold < showSoldMaxBuy')
 events = events.query("showName != 'מייל שירות הלקוחות'")
-    
+
+events = events[['showName', 'showDate', 'link', 'showImage']]
+events = events.rename(columns={'showName':'show_name', 'showDate':'show_date', 'showImage':'img'})
+events['venue'] = 'בארבי'

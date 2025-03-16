@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 
 def convert_dates(date_str):
-    date_str = datetime.strptime(date_str, '%d.%m.%Y')
+    date_str = datetime.strptime(date_str, '%d.%m')
     date_str = date_str.replace(year=datetime.now().year)
     return date_str
 
@@ -22,7 +22,9 @@ for event in soup.find_all('a', class_='ozen-partial ozen-partial__event-block',
     date = event_body.find('time')
     date = date.find(string=True, recursive=False).strip()
     date, hour = date.split(' | ')
-    events.append({'title':title, 'date':date, 'hour':hour})
+    link = event.get('href')
+    img = event.find('img').get('src')
+    events.append({'show_name':title, 'date':date, 'hour':hour, 'link':link, 'img':img, 'venue':'מועדון האוזן'})
     
 events = pd.DataFrame(events)
 events['date'] = events['date'].apply(convert_dates)

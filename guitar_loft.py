@@ -28,6 +28,6 @@ for event in soup.find_all('div', class_='jet-woo-products__item jet-woo-builder
     date = datetime.strptime(date, '%d/%m %H:%M')
     date = date.replace(year=datetime.now().year)
     img = event_container.find('img').get('src')
-    events.append({'title':title, 'date':date, 'img':img, 'link':link})
+    events.append({'show_name':title, 'date':date, 'img':img, 'link':link, 'venue':'The Guitar Loft'})
 
 events = pd.DataFrame(events)

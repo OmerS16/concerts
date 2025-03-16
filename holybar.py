@@ -40,9 +40,9 @@ def convert_dates(date_str):
     return date_str
 
 chrome_options = Options()
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("--disable-gpu")
-chrome_options.add_argument("--window-size=1920,1080")
+# chrome_options.add_argument("--headless")
+# chrome_options.add_argument("--disable-gpu")
+# chrome_options.add_argument("--window-size=1920,1080")
 chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
 
 service = Service('chromedriver.exe')
@@ -61,34 +61,37 @@ post_pattern = re.compile(r'https://www.instagram.com/holybar/p/')
 posts = [link.get_attribute('href') for link in links if post_pattern.search(link.get_attribute('href') or '')] 
 
 last_post = posts[1]
+# last_post = 'https://www.instagram.com/holybar/p/DG-w3exIbxm/'
 driver.get(last_post)
 time.sleep(5)
 
 images = driver.find_elements(By.TAG_NAME, "img")
 
-for img in images:
-    img_text = img.get_attribute('alt')
-    img_text_clean = unicodedata.normalize("NFKC", img_text)
-    img_text_clean = re.sub(r'[^\x00-\x7F]+', '', img_text_clean)
-    img_text_clean = re.sub(r'^\s+', '', img_text_clean, flags=re.MULTILINE)
-    lineup = pattern.search(img_text_clean)
-    if lineup:
-        break
+# for img in images:
+#     img_text = img.get_attribute('alt')
+#     img_text_clean = unicodedata.normalize("NFKC", img_text)
+#     img_text_clean = re.sub(r'[^\x00-\x7F]+', '', img_text_clean)
+#     img_text_clean = re.sub(r'^\s+', '', img_text_clean, flags=re.MULTILINE)
+#     lineup = pattern.search(img_text_clean)
+#     if lineup:
+#         break
 
-day_pattern = r'^(?:Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday).*'
-matches = re.findall(day_pattern, img_text_clean, flags=re.MULTILINE)
+# day_pattern = r'^(?:Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday).*'
+# matches = re.findall(day_pattern, img_text_clean, flags=re.MULTILINE)
+matches = 0
 
 events = []
 
 if matches:
-    for line in matches:
-        date, title = line.split(' - ', 1)
-        title = title.strip()
-        date = date + ' 20:45'
-        date = datetime.strptime(date, '%A, %B %d %H:%M')
-        date = date.replace(year=datetime.now().year)
-        events.append({'title':title, 'date':date})
-    events = pd.DataFrame(events)
+    ...
+    # for line in matches:
+    #     date, title = line.split(' - ', 1)
+    #     title = title.strip()
+    #     date = date + ' 20:45'
+    #     date = datetime.strptime(date, '%A, %B %d %H:%M')
+    #     date = date.replace(year=datetime.now().year)
+    #     events.append({'show_name':title, 'date':date, 'link':last_post})
+    # events = pd.DataFrame(events)
 
 else:
     matching_images = [img for img in images if pattern.search(img.get_attribute('alt') or '')]

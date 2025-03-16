@@ -27,6 +27,6 @@ for event in soup.find_all('div', class_='ArticlesGalleryMatrixItem'):
     date = date.replace(year=datetime.now().year)
     link = 'https://www.tmu-na.org.il/' + title_container.get('href')
     img = 'https://www.tmu-na.org.il/' + event.find('img').get('src')
-    events.append({'title':title, 'date':date, 'link':link, 'img':img})
+    events.append({'show_name':title, 'date':date, 'link':link, 'img':img, 'venue':'תמונע'})
 
 events = pd.DataFrame(events)

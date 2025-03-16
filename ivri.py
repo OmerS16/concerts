@@ -34,6 +34,6 @@ for event in soup.find_all('div', class_='mq7Mp3'):
     img = img.replace('blur_2,', '')
     img = re.sub(r"w_\d+", "w_500", img)
     img = re.sub(r"h_\d+", "h_300", img)
-    events.append({'title':title, 'date':date, 'link':link, 'img':img})
+    events.append({'show_name':title, 'date':date, 'link':link, 'img':img, 'venue':'קפה עברי'})
 
 events = pd.DataFrame(events)

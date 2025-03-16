@@ -11,4 +11,4 @@ date = str(today + timedelta(days=days_until_tuesday))
 date = date + ' 20:00'
 date = datetime.strptime(date, '%Y-%m-%d %H:%M')
 
-events = pd.DataFrame({'title': [title], 'date': [date]})
+events = pd.DataFrame({'show_name': [title], 'date': [date], 'venue':'Guestroom'})

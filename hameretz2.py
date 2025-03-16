@@ -56,13 +56,12 @@ for event in events_section.find_elements(By.CLASS_NAME, 'qElViY'):
     hour = hour[:5]
     date = date + ' ' + str(hour)
     date = datetime.strptime(date, '%d %b %Y %H:%M')
-    description = event.find_element(By.CSS_SELECTOR, '.vx_Hkb').get_attribute('textContent')
     link = event.find_element(By.CSS_SELECTOR, '.DjQEyU.m022zm.aUkG34').get_attribute('href')
     img = event.find_element(By.CSS_SELECTOR, '.L5u5gG.sGc29C2')
     img = img.find_element(By.TAG_NAME, 'img').get_attribute('src')
     img = img.replace('blur_2,', '')
     img = re.sub(r"w_\d+", "w_500", img)
     img = re.sub(r"h_\d+", "h_300", img)
-    events.append({'title':title, 'description':description, 'date':date, 'link':link, 'img':img})
+    events.append({'show_name':title, 'date':date, 'link':link, 'img':img, 'venue':'המרץ 2'})
     
 events = pd.DataFrame(events)
