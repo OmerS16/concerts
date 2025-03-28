@@ -6,9 +6,9 @@ import re
 
 def ivri():
     months_map = {
-        "בינואר": "January", "בפברואר": "February", "במרץ": "March", "באפריל": "April",
-        "במאי": "May", "ביוני": "June", "ביולי": "July", "באוגוסט": "August",
-        "בספטמבר": "September", "באוקטובר": "October", "בנובמבר": "November", "בדצמבר": "December"
+        "בינו׳": "January", "בפבר׳": "February", "במרץ": "March", "באפר׳": "April",
+        "במאי": "May", "ביונ׳": "June", "ביול׳": "July", "באוג׳": "August",
+        "בספט׳": "September", "באוק׳": "October", "בנוב׳": "November", "בדצמ׳": "December"
     }
     
     url = "https://www.cafeivri.co.il/event-list"

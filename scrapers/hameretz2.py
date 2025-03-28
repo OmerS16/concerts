@@ -30,13 +30,18 @@ def hameretz2():
     chrome_options.add_argument("--disable-gpu")
     chrome_options.add_argument("--window-size=1920,1080")
     chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
-    
-    service = Service('chromedriver.exe')
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--user-data-dir=/tmp/chrome-data")
+    chrome_options.add_argument("--single-process")
+    chrome_options.add_argument("--remote-debugging-port=9222")
+    chrome_options.binary_location = "/usr/local/bin/chrome-linux64/chrome"
+    service = Service('/usr/local/bin/chromedriver')
     driver = webdriver.Chrome(service=service, options=chrome_options)
     
     driver.get("https://www.hameretz2.org/")
     
-    wait = WebDriverWait(driver, 10)
+    wait = WebDriverWait(driver, 20)
     events_section = wait.until(EC.presence_of_element_located((By.ID, "comp-m4r7k1ni")))
     
     events = []
@@ -45,7 +50,7 @@ def hameretz2():
         title = event.find_element(By.CLASS_NAME, 'DjQEyU').get_attribute('textContent')
         if any(word in title for word in ['קולנוע', 'לנדסקייפ']):
             continue
-        wait = WebDriverWait(event, 10)
+        wait = WebDriverWait(event, 20)
         button = event.find_element(By.CSS_SELECTOR, ".sr_1jEj.sFpk6n3.sUMQ4T0.oDFuHIw---priority-4-link.s__6KuQ2f")
         time.sleep(3)
         button.click()

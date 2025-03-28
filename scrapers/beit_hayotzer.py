@@ -26,3 +26,5 @@ def beit_hayotzer():
         
     events = pd.DataFrame(events)
     return events
+
+events = beit_hayotzer()

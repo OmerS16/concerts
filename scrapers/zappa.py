@@ -17,7 +17,7 @@ def zappa():
     }
     
     session = requests.Session()
-    response = session.get(url, headers=headers)
+    response = session.get(url, headers=headers, timeout=30)
     soup = BeautifulSoup(response.text, 'html.parser')
     
     events = pd.DataFrame()
