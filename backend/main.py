@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, Query
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from typing import Optional
 from datetime import datetime, timedelta, date
@@ -8,6 +9,13 @@ from models import Event, Venue
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def get_db():
     db = SessionLocal()
@@ -32,8 +40,8 @@ def read_today_events(db: Session = Depends(get_db)):
     )
 
     if not events:
-        # Fallback: next 7 days
-        end = start + timedelta(days=7)
+        # Fallback: next 3 days
+        end = start + timedelta(days=3)
         events = (
             db.query(Event)
             .join(Event.venue)
