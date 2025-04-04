@@ -19,7 +19,7 @@ def lambda_handler(event, context):
     
     s3 = boto3.client("s3")
     s3.put_object(
-        Bucket="music-scraper-data",
+        Bucket="music-scraper",
         Key="latest_scrape.csv",
         Body=csv_buffer.getvalue()
     )
