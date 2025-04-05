@@ -2,7 +2,7 @@ import pandas as pd
 from datetime import datetime
 import requests
 
-def barby():
+def scrape():
     url = "https://barby.co.il/api/shows/find"
     
     headers = {

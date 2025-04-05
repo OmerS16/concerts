@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 import re
 
-def tmuna():
+def scrape():
     url = 'https://www.tmu-na.org.il/?CategoryID=102'
     
     response = requests.get(url)

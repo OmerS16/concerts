@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 
-def beit_hayotzer():
+def scrape():
     url = 'https://bama.acum.org.il/'
     
     response = requests.get(url)
@@ -26,5 +26,3 @@ def beit_hayotzer():
         
     events = pd.DataFrame(events)
     return events
-
-events = beit_hayotzer()

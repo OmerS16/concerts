@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 
-def guitar_loft():
+def scrape():
     url = 'https://guitarloft.co.il/%d7%9c%d7%95%d7%97-%d7%9e%d7%95%d7%a4%d7%a2%d7%99%d7%9d/'
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')

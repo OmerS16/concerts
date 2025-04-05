@@ -5,7 +5,7 @@ from datetime import datetime
 import re
 import json
 
-def amama():
+def scrape():
     url = "https://www.goshow.co.il/pages/place/1780"
     
     response = requests.get(url)

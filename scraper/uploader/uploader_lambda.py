@@ -10,7 +10,7 @@ def lambda_handler(event, context):
     try:
         print("Fetching from S3...")
         s3 = boto3.client("s3")
-        obj = s3.get_object(Bucket="music-scraper-data", Key="latest_scrape.csv")
+        obj = s3.get_object(Bucket="music-scraper", Key="latest_scrape.csv")
         print("S3 fetch complete")
 
         csv_data = obj["Body"].read().decode("utf-8")

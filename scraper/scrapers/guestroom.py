@@ -1,7 +1,7 @@
 import pandas as pd
 from datetime import datetime, timedelta
 
-def guestroom():
+def scrape():
     title = 'Jazz Show'
     
     today = datetime.today().date()

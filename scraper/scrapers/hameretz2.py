@@ -9,7 +9,7 @@ from datetime import datetime
 import time
 import re
 
-def hameretz2():
+def scrape():
     heb_to_eng = {
         "בינו׳": "Jan",
         "בפבר׳":"Feb",

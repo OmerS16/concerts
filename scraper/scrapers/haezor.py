@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 import re
 
-def haezor():
+def scrape():
     def convert_dates(date_str):
         date_str = datetime.strptime(date_str, '%a %B %d')
         date_str = date_str.replace(year=datetime.now().year)

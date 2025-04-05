@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 
-def shablul():
+def scrape():
     months_map = {'January':'ינואר', 'February':'פברואר', 'March':'מרץ', 'April':'אפריל',
                   'May':'מאי', 'June':'יוני', 'July':'יולי', 'August':'אוגוסט',
                   'September':'ספטמבר', 'October':'אוקטובר', 'November':'נובמבר', 'December':'דצמבר'}

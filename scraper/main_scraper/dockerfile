@@ -42,10 +42,10 @@ COPY main_scraper/ ${LAMBDA_TASK_ROOT}/
 COPY scrapers/ ${LAMBDA_TASK_ROOT}/scrapers
 
 # Copy chromedriver and chrome-linux64 folder from your local bin folder into the container
-COPY main_scraper/bin/chromedriver /usr/local/bin/chromedriver
+COPY bin/chromedriver /usr/local/bin/chromedriver
 RUN chmod +x /usr/local/bin/chromedriver
 
-COPY main_scraper/bin/chrome-linux64 /usr/local/bin/chrome-linux64
+COPY bin/chrome-linux64 /usr/local/bin/chrome-linux64
 RUN chmod +x /usr/local/bin/chrome-linux64/chrome
 
 # Set environment variable to point to your chrome binary

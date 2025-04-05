@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import json
 from datetime import datetime
 
-def zappa():
+def scrape():
     url = "https://www.zappa-club.co.il/city/%D7%AA%D7%9C-%D7%90%D7%91%D7%99%D7%91-249/venue/%D7%96%D7%90%D7%A4%D7%94-%D7%AA%D7%9C-%D7%90%D7%91%D7%99%D7%91-%D7%9E%D7%AA%D7%97%D7%9D-%D7%9E%D7%99%D7%93%D7%98%D7%90%D7%95%D7%9F-25734/"
     headers = {
         "Accept": "application/json, text/plain, */*",

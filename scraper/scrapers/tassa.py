@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 
-def tassa():
+def scrape():
     url = 'https://tassatlv.co.il/collections/%D7%94%D7%95%D7%A4%D7%A2%D7%95%D7%AA'
     
     response = requests.get(url)

@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 
-def ozenbar():
+def scrape():
     def convert_dates(date_str):
         date_str = datetime.strptime(date_str, '%d.%m')
         date_str = date_str.replace(year=datetime.now().year)

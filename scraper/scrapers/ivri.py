@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 import re
 
-def ivri():
+def scrape():
     months_map = {
         "בינו׳": "January", "בפבר׳": "February", "במרץ": "March", "באפר׳": "April",
         "במאי": "May", "ביונ׳": "June", "ביול׳": "July", "באוג׳": "August",

@@ -2,58 +2,30 @@ from scrapers import amama, barby, beit_hayotzer, guestroom, guitar_loft, haezor
 import pandas as pd
 import time
 
-def scrape():
-    start = time.time()
-    amama_df = amama.amama()
-    print(f"amama() took {time.time() - start:.2f} seconds")
+def run_scrape(venue) -> pd.DataFrame:
+    venue_df = pd.DataFrame()
+    try:
+       start = time.time()
+       venue_df = venue.scrape()
+       print(f"{venue} took {time.time() - start:.2f} seconds")
+    except Exception as e:
+       print(f'{venue} failed: {e}')
+    return venue_df
 
-    start = time.time()
-    barby_df = barby.barby()
-    print(f"barby() took {time.time() - start:.2f} seconds")
-
-    start = time.time()
-    beit_hayotzer_df = beit_hayotzer.beit_hayotzer()
-    print(f"beit_hayotzer() took {time.time() - start:.2f} seconds")
-
-    start = time.time()
-    guestroom_df = guestroom.guestroom()
-    print(f"guestroom() took {time.time() - start:.2f} seconds")
-
-    start = time.time()
-    guitar_loft_df = guitar_loft.guitar_loft()
-    print(f"guitar_loft() took {time.time() - start:.2f} seconds")
-
-    start = time.time()
-    haezor_df = haezor.haezor()
-    print(f"haezor() took {time.time() - start:.2f} seconds")
-
-    start = time.time()
-    hameretz_df = hameretz2.hameretz2()
-    print(f"hameretz2() took {time.time() - start:.2f} seconds")
-
-    start = time.time()
-    ivri_df = ivri.ivri()
-    print(f"ivri() took {time.time() - start:.2f} seconds")
-
-    start = time.time()
-    levontin_df = levontin.levontin()
-    print(f"levontin() took {time.time() - start:.2f} seconds")
-
-    start = time.time()
-    ozenbar_df = ozenbar.ozenbar()
-    print(f"ozenbar() took {time.time() - start:.2f} seconds")
-
-    start = time.time()
-    shablul_df = shablul.shablul()
-    print(f"shablul() took {time.time() - start:.2f} seconds")
-
-    start = time.time()
-    tassa_df = tassa.tassa()
-    print(f"tassa() took {time.time() - start:.2f} seconds")
-
-    start = time.time()
-    tmuna_df = tmuna.tmuna()
-    print(f"tmuna() took {time.time() - start:.2f} seconds")
+def main():
+    amama_df = run_scrape(amama)
+    barby_df = run_scrape(barby)
+    beit_hayotzer_df = run_scrape(beit_hayotzer)
+    guestroom_df = run_scrape(guestroom)
+    guitar_loft_df = run_scrape(guitar_loft)
+    haezor_df = run_scrape(haezor)
+    hameretz_df = run_scrape(hameretz2)
+    ivri_df = run_scrape(ivri)
+    levontin_df = run_scrape(levontin)
+    ozenbar_df = run_scrape(ozenbar)
+    shablul_df = run_scrape(shablul)
+    tassa_df = run_scrape(tassa)
+    tmuna_df = run_scrape(tmuna)
     
     dfs = [amama_df, barby_df, beit_hayotzer_df, guestroom_df, guitar_loft_df, 
            haezor_df, hameretz_df, ivri_df, levontin_df, 

@@ -2,10 +2,10 @@ import json
 import boto3
 import pandas as pd
 from io import StringIO
-from main import scrape
+from main import main
 
 def lambda_handler(event, context):
-    events = scrape()
+    events = main()
 
     if events.empty:
         return {
